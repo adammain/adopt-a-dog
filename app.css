@@ -1,0 +1,182 @@
+/* Base General
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+body {
+  overflow: scroll;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a:link {
+  color: #1EAEDB;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #06a9d6;
+}
+
+a:hover {
+  color: #0FA0CE;
+}
+
+a:active {
+  color: #0e90b8;
+}
+
+nav, a, button {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+/* Forms and Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.button {
+  color: transparent;
+  background-color: transparent;
+  border-color: transparent;
+  border-style: none;
+  cursor: pointer;
+}
+
+.input-button, span, p, h1, h2, h3, h4, h5, h6 {
+  font-family: hurme_no2-webfont,-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.input-button {
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  padding: 0;
+  margin: .5rem 0;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3306d6;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.18);
+  padding: 0.25em 0.75em;
+  min-width: 10ch;
+  min-height: 44px;
+  text-align: center;
+  line-height: 1.1;
+  transition: 220ms all ease-in-out;
+
+  @media screen and (-ms-high-contrast: active) {
+    border: 2px solid currentcolor;
+  }
+}
+
+.button:hover {
+  background-color: #3d0cee;
+}
+
+.input-button:hover {
+  outline-style: solid;
+  outline-color: transparent;
+  box-shadow: 0 0 0 4px #2c05b8;
+}
+
+.input-button:focus {
+  outline-style: solid;
+  outline-color: transparent;
+  box-shadow: 0 0 0 4px #2c05b8;
+}
+
+.input-button:active {
+  background-color: #22009e;
+}
+
+/* Page Elements
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/*
+ *
+ * Header
+ *
+ */
+
+.hidden {
+  visibility: hidden;
+}
+
+/*
+ *
+ * Main
+ *
+ */
+
+main {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ *
+ * Results
+ *
+ */
+
+ .results {
+   padding: 0;
+ }
+
+/*
+ *
+ * Card
+ *
+ */
+
+ .list-item {
+   margin-bottom: 3rem;
+ }
+
+ .card {
+   width: 100%;
+ }
+
+ .card__image {
+  object-fit: cover;
+  width: 100%;
+  height: 500px;
+ }
+
+/* Desktop Screen Size Rules
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+@media only screen and (min-width: 701px) {
+  body {
+    background-color: #f6f7fb;
+  }
+
+  input[type=button], button.button {
+    margin: 0;
+  }
+
+  /*
+  *
+  * Header
+  *
+  */
+
+
+
+  /*
+  *
+  * Main
+  *
+  */
+
+  main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+}
