@@ -15,12 +15,17 @@
   <header class="grid jc-center">
       <h1>Find your perfect pet.</h1>
   </header>
-  <main>
     <form>
       <label for="zipcode"></label>
       <input type="number" class="js-zipcode-input" maxlength="5" placeholder="Zipcode" required>
       <input type="submit" value="Search">
     </form>
+
+    <div class="filters js-filters">
+      <input type="button" class="filters__button-input js-filters--dogs" value="Dogs">
+      <input type="button" class="filters__button-input js-filters--cats" value="Cats">
+      <input type="reset" class="filters__reset-input js-filters--clear" value="Clear">
+    </div>
 
     <div>
       <ul class="results js-results">

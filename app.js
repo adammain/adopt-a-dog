@@ -7,23 +7,10 @@ let STORE = {
   ],
   cats: [
 
-  ]
+  ],
+  filter: 0
 }
-// [
-  // {
-  //   cat: {
-  //     id: "id-number-here",
-  //     breeds: "breed-types-here",
-  //     colors: "colors-here-check-here"
-  //       ? "colors-here"
-  //       : "Unknown",
-  //     organization: "orgs-object-info-here",
-  //     status: "status-designation-here",
-  //     attributes: "attr-object-here",
-  //     pictures: "pics-object-info-here" 
-  //   }
-  // }
-// ]
+
 // STORE EACH RESULT OBJECT WITH OUR DESIRED PROPERTIES
 function storePetResults(results) {
   let data = results.data
@@ -82,6 +69,32 @@ function storePetResults(results) {
   renderResults()
 }
 
+// LISTENER FUNCTIONS
+function handleZipCodeSearch() {
+  $('form').submit(function(e) {
+    e.preventDefault()
+    const zipcode = $('.js-zipcode-input').val()
+    console.log("submitted", zipcode)
+    fetchData(zipcode)
+  })
+}
+
+function handleFilter() {
+  $('.js-filters--dogs').click(function() {
+    STORE.filter = 'dogs'
+    renderResults()
+  })
+  $('.js-filters--cats').click(function() {
+    STORE.filter = 'cats'
+    renderResults()
+  })
+  $('.js-filters--clear').click(function() {
+    STORE.filter = 'none'
+    renderResults()
+  })
+}
+
+// API FETCH REQUEST
 function fetchData(zipcode = 80203) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/vnd.api+json");
@@ -97,7 +110,7 @@ function fetchData(zipcode = 80203) {
   };
   
   // Fetch Dogs
-  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=50&fields=[breeds]=name`, requestOptions)
+  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=10&fields=[breeds]=name`, requestOptions)
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -115,7 +128,7 @@ function fetchData(zipcode = 80203) {
     .catch(error => console.log('error', error))
 
   // Fetch Cats
-  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=5&fields=[breeds]=name`, requestOptions)
+  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=10&fields=[breeds]=name`, requestOptions)
   .then(response => response.json())
   .then(responseJson => {
     storePetResults(responseJson)
@@ -124,25 +137,15 @@ function fetchData(zipcode = 80203) {
   .catch(error => console.log('error', error))
 }
 
-function handleZipCodeSearch() {
-  $('form').submit(function(e) {
-    e.preventDefault()
-    const zipcode = $('.js-zipcode-input').val()
-    console.log("submitted", zipcode)
-    fetchData(zipcode)
-  })
-}
-
 function initialize(){
   fetchData()
   handleZipCodeSearch()
+  handleFilter()
 }
 
 $(initialize) 
 
 // UP NEXT
-// o Add a few MVP HTML filter options (Dog, Cat, Filter Button with Pop up for MVP/Mobile limited filter options)
-// o Update Result List with filtered result
 
 // o Create Mobile Details View 
 // o Fill Mobile Details View with data from STORE for clicked pet
@@ -165,8 +168,22 @@ function renderNoResults() {
 
 // DISPLAY RESULTS TO PAGE
 function renderResults() {
-  console.log("`renderResults`, ran", STORE.dogs)
-  const results = STORE.dogs
+  console.log("`renderResults`, ran", { ...STORE.dogs, ...STORE.cats })
+  let results 
+
+  // Apply filters or display all results
+  switch(STORE.filter) {
+    case 'cats': 
+      results = [ ...STORE.cats ]
+      break;
+    case 'dogs': 
+      results = [ ...STORE.dogs ]
+      break;
+    default:
+      results = shuffle([ ...STORE.dogs, ...STORE.cats ])
+  }
+
+  // Clear previous displayed results
   $('.js-results').empty()
   
   // Create list element for each result and add to DOM
@@ -186,4 +203,25 @@ function renderResults() {
       </li>`
     )
   }
+}
+
+
+// HELPER FUNCTIONS
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }
