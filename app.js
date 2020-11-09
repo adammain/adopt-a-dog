@@ -1,110 +1,85 @@
 const apikey = "Nj7099JE"
 const url = `https://test1-api.rescuegroups.org/v5`
 
-let STORE = [{
-  pet: {
-    id: "id-number-here",
-    species: "species-name-here",
-    breeds: "breed-types-here",
-    colors: "colors-here-check-here"
-      ? "colors-here"
-      : "Unknown",
-    organization: "orgs-object-info-here",
-    status: "status-designation-here",
-    attributes: "attr-object-here",
-    pictures: "pics-object-info-here" 
-  }
-}]
+let STORE = {
+  dogs: [
 
-// Build pet object for each result that includes all properties I want to display
+  ],
+  cats: [
+
+  ]
+}
+// [
+  // {
+  //   cat: {
+  //     id: "id-number-here",
+  //     breeds: "breed-types-here",
+  //     colors: "colors-here-check-here"
+  //       ? "colors-here"
+  //       : "Unknown",
+  //     organization: "orgs-object-info-here",
+  //     status: "status-designation-here",
+  //     attributes: "attr-object-here",
+  //     pictures: "pics-object-info-here" 
+  //   }
+  // }
+// ]
+// STORE EACH RESULT OBJECT WITH OUR DESIRED PROPERTIES
 function storePetResults(results) {
   let data = results.data
   let included = results.included
-  let petResults = {pets:[]}
+  let speciesId = data[0].relationships.species.data[0].id
 
-  // Get IDs for eachpet properties from results
-  // TODO: Remove below initial assignment and assign in loop below
-  for (i in data) {
-    let pet = {
-      id: data[i].id,
-      species: data[i].relationships.species.data[0].id,
-      breeds: data[i].relationships.breeds.data,
-      colors: data[i].relationships.colors
-        ? data[i].relationships.colors.data[0].id
-        : "Unknown",
-      organization: data[i].relationships.orgs.data[0].id,
-      status: data[i].relationships.statuses.data[0].id,
-      attributes: data[i].attributes,
-      pictures: data[i].relationships.pictures 
-        ? data[i].relationships.pictures.data[0].id
-        : "none"
-    }
-
-    // push pet to petResults array to later save to STORE
-    petResults.pets.push(pet)
-  }
+    // Clear out previous search results for this species (8 = Dog ID, 3 = Cat ID)
+    speciesId === "8" ? STORE.dogs = [] : STORE.cats = []
 
   // Convert IDs to their text value (i.e. species ID: 8 = "Dog")
-  for (pet in petResults.pets) {   
-    // For each pet object being built, convert Id to equal `included` object value                                  
-    for (item in included) {
-
-      // TO DO: Change to Switch Expression
-      // Convert species id to species name
-      if (included[item].id === petResults.pets[pet].species) {
-        petResults.pets[pet].species = included[item].attributes.singular
-      }
-
-      // Convert pictures id to pictures object
-      if (included[item].id === petResults.pets[pet].pictures) {
-        petResults.pets[pet].pictures = included[item].attributes
-      }
-
-      // Convert orgs id to orgs object
-      if (included[item].id === petResults.pets[pet].organization) {
-        petResults.pets[pet].organization = included[item].attributes
-      }
-
-      // Convert status id to status value
-      if (included[item].id === petResults.pets[pet].status) {
-        petResults.pets[pet].status = included[item].attributes.name
-      }
-
-      // Convert color id to pet color text value
-      if (petResults.pets[pet].colors !== "Unknown" && included[item].id === petResults.pets[pet].colors) {
-        petResults.pets[pet].colors = included[item].attributes.name
-      }
+  for (pet in data) {   
+    // Get each result's properties we want to save
+    let petResult = {
+      id: data[pet].id,
+      species: data[pet].relationships.species.data[0].id,
+      breedString: data[pet].attributes.breedString,
+      breedPrimary: data[pet].attributes.breedPrimary,
+      breedSecondary: data[pet].attributes.breedSecondary ? data[pet].attributes.breedSecondary : 0,
+      colors: data[pet].relationships.colors
+        ? data[pet].relationships.colors.data[0].id
+        : "Unknown",
+      organization: data[pet].relationships.orgs.data[0].id,
+      status: data[pet].relationships.statuses.data[0].id,
+      attributes: data[pet].attributes,
+      pictures: data[pet].relationships.pictures 
+        ? data[pet].relationships.pictures.data[0].id
+        : 0
     }
-  }
-  console.log("TO-STORE: ", petResults)
-  STORE = petResults
-  console.log("STORE: ", petResults)
-  
-  renderResults()
-}
 
-// DISPLAY RESULTS TO PAGE
-function renderResults() {
-  const results = STORE.pets
-  $('.js-results').empty()
+    // For each pet object being built, map return Id to it's real value                                  
+    for (item in included) {
+      switch(included[item].id) {
+        case petResult.species: 
+          petResult.species = included[item].attributes.singular
+          break;
+        case petResult.pictures: 
+          petResult.pictures = included[item].attributes
+          break;
+        case petResult.organization:
+          petResult.organization = included[item].attributes
+          break;
+        case petResult.status:
+          petResult.status = included[item].attributes.name
+          break;
+        case petResult.colors:
+          petResult.colors = included[item].attributes.name
+          break;
+      }
+    } // End of "included" loop
   
-  // Create list element for each result and add to DOM
-  for (pet in results) {
-    let imgURL = results[pet].pictures.large.url
-    let petName = results[pet].attributes.name
-    $('.js-results').append(
-      `<li class="product">
-        <div class="product">
-          <img 
-            src="${imgURL}" 
-            alt=""
-            class="product__detail-image js-card__image"
-          >
-          <p><b>Name:</b> ${petName}</p>
-        </div>
-      </li>`
-    )
-  }
+    // STORE RESULTS INTO STORE
+    petResult.species === 'Dog' ? STORE.dogs.push(petResult) : STORE.cats.push(petResult) 
+  } // End of "data" loop
+  
+  console.log("STORE: ", STORE)
+  renderResults()
 }
 
 function fetchData(zipcode = 80203) {
@@ -121,13 +96,32 @@ function fetchData(zipcode = 80203) {
     redirect: 'follow'
   };
   
-  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=5&fields=[breeds]=name`, requestOptions)
-    .then(response => response.json())
-    .then(responseJson => {
-      storePetResults(responseJson)
-      console.log(responseJson)
+  // Fetch Dogs
+  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=50&fields=[breeds]=name`, requestOptions)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error(response.statusText)
     })
-    .catch(error => console.log('error', error));
+    .then(responseJson => {
+      if (responseJson.meta.count === 0) {
+        renderNoResults()
+      } else {
+        console.log("responseJson",responseJson)
+        storePetResults(responseJson)
+      }
+    })
+    .catch(error => console.log('error', error))
+
+  // Fetch Cats
+  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=5&fields=[breeds]=name`, requestOptions)
+  .then(response => response.json())
+  .then(responseJson => {
+    storePetResults(responseJson)
+    console.log(responseJson)
+  })
+  .catch(error => console.log('error', error))
 }
 
 function handleZipCodeSearch() {
@@ -147,17 +141,49 @@ function initialize(){
 $(initialize) 
 
 // UP NEXT
-// o Connect zipcode search functionality
-// o Update store with pet data
-// o Update MVP Card info with API data
-// o Add a few MVP HTML filter options 
-// o Create API calls for filter options 
-// o Update STORE with new filtered pet results
-// o Update Card with new result
+// o Add a few MVP HTML filter options (Dog, Cat, Filter Button with Pop up for MVP/Mobile limited filter options)
+// o Update Result List with filtered result
 
 // o Create Mobile Details View 
 // o Fill Mobile Details View with data from STORE for clicked pet
-// o Create Mobile Map View 
-// o Connect Map to Google Maps API
 
 // o Begin Desktop Screen Sized MVP
+
+
+// RENDER FUNCTIONS
+
+function renderNoResults() {
+  console.log("`renderNoResults`, ran")
+  const results = STORE.dogs
+  $('.js-results').empty()
+  $('.js-results').append(
+    `<li class="product">
+      <p>Sorry, no results were found within 25 miles of given zipcode.</p>
+    </li>`
+  )
+}
+
+// DISPLAY RESULTS TO PAGE
+function renderResults() {
+  console.log("`renderResults`, ran", STORE.dogs)
+  const results = STORE.dogs
+  $('.js-results').empty()
+  
+  // Create list element for each result and add to DOM
+  for (pet in results) {
+    let imgURL = results[pet].pictures.large.url
+    let petName = results[pet].attributes.name
+    $('.js-results').append(
+      `<li class="product">
+        <div class="product">
+          <img 
+            src="${imgURL}" 
+            alt=""
+            class="product__detail-image js-product-img"
+          >
+          <p><b>Name:</b> ${petName}</p>
+        </div>
+      </li>`
+    )
+  }
+}

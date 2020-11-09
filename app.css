@@ -138,11 +138,11 @@ main {
    margin-bottom: 3rem;
  }
 
- .card {
+ .product {
    width: 100%;
  }
 
- .card__image {
+ .product__detail-image {
   object-fit: cover;
   width: 100%;
   height: 500px;
