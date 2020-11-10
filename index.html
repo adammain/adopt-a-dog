@@ -15,6 +15,34 @@
   <header class="grid jc-center">
       <h1>Find your perfect pet.</h1>
   </header>
+  <main>
+    <div class="modal hidden"> 
+      <div class="modal__dialog"> 
+        <div class="modal__dialog--content"> 
+          <div class="modal__content--header"> 
+            <div>
+              <button class='modal__button--back' onClick='closeModalDialog()'>
+                Back
+              </button>
+            </div>
+            <img class="modal__dialog--image js-modal__image" src="" alt="">
+            <h3 class="modal--title"></h3> 
+          </div> 
+          <div class="modal__body">
+            <p class="modal__body--about-pet"></p>
+            <p class="modal__body--breed"></p>
+            <p class="modal__body--sex"></p>
+            <p class="modal__body--age"></p>
+            <p class="modal__body--adoptionProcess"></p>
+            <a href="" class="modal__body--org-link" target="_blank"></a>
+            <p class="modal__body--map-link"></p>
+          </div> 
+          <div class="modal__footer">
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+
     <form>
       <label for="zipcode"></label>
       <input type="number" class="js-zipcode-input" maxlength="5" placeholder="Zipcode" required>

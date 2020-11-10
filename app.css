@@ -124,9 +124,9 @@ main {
  *
  */
 
- .results {
-   padding: 0;
- }
+.results {
+  padding: 0;
+}
 
 /*
  *
@@ -134,19 +134,66 @@ main {
  *
  */
 
- .list-item {
-   margin-bottom: 3rem;
- }
+.list-item {
+  margin-bottom: 3rem;
+}
 
- .product {
-   width: 100%;
- }
+.product {
+  width: 100%;
+  margin-top: 2rem;
+}
 
- .product__detail-image {
+.product__detail--image {
   object-fit: cover;
   width: 100%;
-  height: 500px;
- }
+  height: 350px;
+}
+
+.product__detail--content {
+  height: 4rem;
+}
+
+.content__body {
+  font-size: 11px;
+}
+
+ /*
+ *
+ * Product Details Popup
+ *
+ */
+.hidden {
+  display: none;
+}
+.modal {
+  position: fixed;
+  top: 0vh;
+  left: 0vw;
+  width: 100vw;
+  height: 100%;
+  z-index: 9;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.modal__dialog {
+  width: 100%;
+  height: 100%;
+}
+
+.modal__dialog--content {
+  padding: 20px;
+}
+
+.modal__dialog--image {
+  object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  height: 200px;
+}
 
 /* Desktop Screen Size Rules
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

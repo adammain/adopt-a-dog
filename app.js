@@ -1,6 +1,51 @@
+/* CONSTANTS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 const apikey = "Nj7099JE"
 const url = `https://test1-api.rescuegroups.org/v5`
 
+/* HELPER FUNCTIONS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function getPetFromStore(id) {
+  pets = [ ...STORE.dogs, ...STORE.cats ]
+  for (p in pets) {
+    if (pets[p].id === id) {
+      return pets[p]
+    }
+  }
+  return 0
+}
+
+/* INITIALIZE APP
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+function initialize(){
+  fetchData()
+  onZipCodeSearch()
+  onFilter()
+}
+
+$(initialize) 
+
+/* STORE DATA MANAGEMENT
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 let STORE = {
   dogs: [
 
@@ -11,7 +56,6 @@ let STORE = {
   filter: 0
 }
 
-// STORE EACH RESULT OBJECT WITH OUR DESIRED PROPERTIES
 function storePetResults(results) {
   let data = results.data
   let included = results.included
@@ -69,32 +113,8 @@ function storePetResults(results) {
   renderResults()
 }
 
-// LISTENER FUNCTIONS
-function handleZipCodeSearch() {
-  $('form').submit(function(e) {
-    e.preventDefault()
-    const zipcode = $('.js-zipcode-input').val()
-    console.log("submitted", zipcode)
-    fetchData(zipcode)
-  })
-}
-
-function handleFilter() {
-  $('.js-filters--dogs').click(function() {
-    STORE.filter = 'dogs'
-    renderResults()
-  })
-  $('.js-filters--cats').click(function() {
-    STORE.filter = 'cats'
-    renderResults()
-  })
-  $('.js-filters--clear').click(function() {
-    STORE.filter = 'none'
-    renderResults()
-  })
-}
-
-// API FETCH REQUEST
+/* API REQUESTS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
 function fetchData(zipcode = 80203) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/vnd.api+json");
@@ -119,7 +139,7 @@ function fetchData(zipcode = 80203) {
     })
     .then(responseJson => {
       if (responseJson.meta.count === 0) {
-        renderNoResults()
+        renderError("no-results")
       } else {
         console.log("responseJson",responseJson)
         storePetResults(responseJson)
@@ -137,36 +157,62 @@ function fetchData(zipcode = 80203) {
   .catch(error => console.log('error', error))
 }
 
-function initialize(){
-  fetchData()
-  handleZipCodeSearch()
-  handleFilter()
+/* LISTENER FUNCTION
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+function onZipCodeSearch() {
+  $('form').submit(function(e) {
+    e.preventDefault()
+    const zipcode = $('.js-zipcode-input').val()
+    console.log("submitted", zipcode)
+    fetchData(zipcode)
+  })
 }
 
-$(initialize) 
+function onFilter() {
+  $('.js-filters--dogs').click(function() {
+    STORE.filter = 'dogs'
+    renderResults()
+  })
+  $('.js-filters--cats').click(function() {
+    STORE.filter = 'cats'
+    renderResults()
+  })
+  $('.js-filters--clear').click(function() {
+    STORE.filter = 'none'
+    renderResults()
+  })
+}
 
-// UP NEXT
+function onProductClick() {
+  $('.product').click(function(e) {
+    const petId = $(this).attr('data-id')
+    console.log('product clicked', petId)
+    renderModalDialog(petId)
+  })
+}
 
-// o Create Mobile Details View 
-// o Fill Mobile Details View with data from STORE for clicked pet
+/* RENDER FUNCTIONS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+function renderError(error) {
+  console.log("`renderError`, ran")
+  let message = ''
 
-// o Begin Desktop Screen Sized MVP
+  switch (error) {
+    case 'no-results':
+      message = 'no results were found within 25 miles of given zipcode.'
+      break;
+    default:
+      message = 'something went wrong. Please refresh or try again.'
+  }
 
-
-// RENDER FUNCTIONS
-
-function renderNoResults() {
-  console.log("`renderNoResults`, ran")
-  const results = STORE.dogs
   $('.js-results').empty()
   $('.js-results').append(
     `<li class="product">
-      <p>Sorry, no results were found within 25 miles of given zipcode.</p>
+      <p>Sorry, ${message}</p>
     </li>`
   )
 }
 
-// DISPLAY RESULTS TO PAGE
 function renderResults() {
   console.log("`renderResults`, ran", { ...STORE.dogs, ...STORE.cats })
   let results 
@@ -190,38 +236,57 @@ function renderResults() {
   for (pet in results) {
     let imgURL = results[pet].pictures.large.url
     let petName = results[pet].attributes.name
+    let petId = results[pet].id
     $('.js-results').append(
-      `<li class="product">
-        <div class="product">
+      `<li class="product" data-id="${petId}">
+        <div class="product--container">
           <img 
             src="${imgURL}" 
             alt=""
-            class="product__detail-image js-product-img"
+            class="product__detail--image js-product-img"
           >
-          <p><b>Name:</b> ${petName}</p>
+          <div class="product__detail--content">
+            <span class="content__body">
+              <b>Name:</b> ${petName}
+            </span>
+          </div>
         </div>
       </li>`
     )
   }
-}
 
+  // Initialize product result listener 
+  onProductClick() 
+} // end renderResults()
 
-// HELPER FUNCTIONS
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+function renderModalDialog(id) {
+  const pet = getPetFromStore(id)
+  console.log("pet clicked and found attempting to display", pet)
+  if (pet) {
+    $('.modal').removeClass('hidden')
+    $('.js-modal__image').attr('src', `${pet.pictures.large.url}`)
+    $('.modal--title').text(`Hi, my name is ${pet.attributes.name}!`)
+    $('.modal__body--about-pet').append(`${pet.attributes.descriptionText}`)
+    $('.modal__body--breed').text(`${pet.attributes.breedString}`)
+    $('.modal__body--sex').text(`${pet.attributes.sex}`)
+    $('.modal__body--age').text(`${pet.attributes.ageString}`)
+    $('.modal__body--adoptionProcess').text(`Adoption Process: ${pet.organization.adoptionProcess}`)
+    $('.modal__body--org-link').attr('href',`${pet.organization.url}`).text(`${pet.organization.name}`)
+    $('.modal__body--map-link').text(`Map Link Here`)
+  } else {
+    renderError('broken')
   }
-
-  return array;
 }
+
+function closeModalDialog() {
+  $('.modal').addClass('hidden')
+}
+
+
+
+
+// UP NEXT
+
+// o Do not show results if the pet URL returns a 404
+
+// o Begin Desktop Screen Sized MVP
