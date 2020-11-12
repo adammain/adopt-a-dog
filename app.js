@@ -34,6 +34,20 @@ function getPetFromStore(id) {
   return 0
 }
 
+function textTruncate(str, length, ending) {
+  if (length == null) {
+    length = 200;
+  }
+  if (ending == null) {
+    ending = '...';
+  }
+  if (str.length > length) {
+    return str.substring(0, length - ending.length) + ending;
+  } else {
+    return str;
+  }
+}
+
 /* INITIALIZE APP
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 function initialize(){
@@ -184,10 +198,22 @@ function onFilter() {
 }
 
 function onProductClick() {
-  $('.product').click(function(e) {
-    const petId = $(this).attr('data-id')
+  $('.product--container').click(function(e) {
+    const petId = $(this).closest('article').attr('data-id')
     console.log('product clicked', petId)
     renderModalDialog(petId)
+  })
+}
+
+// TODO: 
+// Listen for the 'more' button -> expand truncated about text
+function onExpandAboutText() {
+  $('.js-button--expand').click(function(e) {
+    console.log("expand")
+    let id = $(this).attr('data-id')
+    let pet = getPetFromStore(id)
+    let aboutText = pet.attributes.descriptionText
+    $(this).closest('.content__section--about').html(`<span class="about__description-text overflow"><b>ABOUT</b> ${aboutText}</span>`)
   })
 }
 
@@ -230,33 +256,134 @@ function renderResults() {
   }
 
   // Clear previous displayed results
-  $('.js-results').empty()
-  
+  $('.js-results--column').empty()
+
   // Create list element for each result and add to DOM
-  for (pet in results) {
-    let imgURL = results[pet].pictures.large.url
-    let petName = results[pet].attributes.name
-    let petId = results[pet].id
-    $('.js-results').append(
-      `<li class="product" data-id="${petId}">
-        <div class="product--container">
-          <img 
-            src="${imgURL}" 
-            alt=""
-            class="product__detail--image js-product-img"
-          >
-          <div class="product__detail--content">
-            <span class="content__body">
-              <b>Name:</b> ${petName}
-            </span>
+  for (let i = 0; i < results.length - 2; i += 3) {
+    let aboutStringOne = results[i].attributes.descriptionText 
+      ? textTruncate(results[i].attributes.descriptionText, 200, `...<button class="button--expand js-button--expand" data-id="${results[i].id}">more</button>`) 
+      : "No Description"
+    let aboutStringTwo = results[i+1].attributes.descriptionText 
+      ? textTruncate(results[i+1].attributes.descriptionText, 200, `...<button class="button--expand js-button--expand" data-id="${results[i+1].id}">more</button>`) 
+      : "No Description"
+    let aboutStringThree = results[i+2].attributes.descriptionText 
+      ? textTruncate(results[i+2].attributes.descriptionText, 200, `...<button class="button--expand js-button--expand" data-id="${results[i+2].id}">more</button>`) 
+      : "No Description"
+    $('.js-results--column').append(
+      `<div class="results__row">
+
+        <article class="product" data-id="${results[i].id}">
+          <header>
+            <div>
+              <span class="header--pet-name">
+                ${results[i].attributes.name}
+              </span>
+            </div>
+          </header>
+          <div class="product--container">
+            <img 
+              src="${results[i].pictures.large.url}" 
+              alt=""
+              class="product__detail--image js-product-img"
+            >
           </div>
-        </div>
-      </li>`
+          <div class="product__detail--content">
+            <section class="content__section">
+              <span class="content__section--name">
+                 <b>ORGANIZATION</b> ${results[i].organization.name}
+              </span>
+              <button class="content__section--button " type="button">
+                <div class="section__button--icon ">
+                  <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
+                </div>
+              </button>
+            </section>
+            <section>
+              <span class="content__section--about">
+                <span class="about__description-text overflow"><b>ABOUT</b> ${aboutStringOne}</span>
+              </span>
+            </section>
+            <section></section>
+          </div>
+        </article>
+
+        <article class="product" data-id="${results[i+1].id}">
+          <header>
+            <div>
+              <span class="header--pet-name">
+                ${results[i+1].attributes.name}
+              </span>
+            </div>
+          </header>
+          <div class="product--container">
+            <img 
+              src="${results[i+1].pictures.large.url}" 
+              alt=""
+              class="product__detail--image js-product-img"
+            >
+          </div>
+          <div class="product__detail--content">
+            <section class="content__section">
+              <span class="content__section--name">
+                 <b>ORGANIZATION</b> ${results[i+1].organization.name}
+              </span>
+              <button class="content__section--button " type="button">
+                <div class="section__button--icon ">
+                  <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
+                </div>
+              </button>
+            </section>
+            <section>
+              <span class="content__section--about">
+                <span class="about__description-text"><b>ABOUT</b> ${aboutStringTwo}</span>
+              </span>
+            </section>
+            <section></section>
+          </div>
+        </article>
+
+        <article class="product" data-id="${results[i+2].id}">
+          <header>
+            <div>
+              <span class="header--pet-name">
+                ${results[i].attributes.name}
+              </span>
+            </div>
+          </header>
+          <div class="product--container">
+            <img 
+              src="${results[i+2].pictures.large.url}" 
+              alt=""
+              class="product__detail--image js-product-img"
+            >
+          </div>
+          <div class="product__detail--content">
+            <section class="content__section">
+              <span class="content__section--name">
+                 <b>ORGANIZATION</b> ${results[i+2].organization.name}
+              </span>
+              <button class="content__section--button " type="button">
+                <div class="section__button--icon">
+                  <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
+                </div>
+              </button>
+            </section>
+            <section>
+              <span class="content__section--about">
+                <span class="about__description-text"><b>ABOUT</b> ${aboutStringThree}</span>
+              </span>
+            </section>
+            <section></section>
+          </div>
+        </article>
+
+     </div>`
     )
   }
 
   // Initialize product result listener 
   onProductClick() 
+  onExpandAboutText()
 } // end renderResults()
 
 function renderModalDialog(id) {
@@ -287,6 +414,8 @@ function closeModalDialog() {
 
 // UP NEXT
 
-// o Do not show results if the pet URL returns a 404
-
+// o Begin horizontal Screen Sized MVP
+// o Begin tablet Sized MVP
 // o Begin Desktop Screen Sized MVP
+
+// o Add breed link to open modal for breed details API

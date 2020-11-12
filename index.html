@@ -16,49 +16,56 @@
       <h1>Find your perfect pet.</h1>
   </header>
   <main>
-    <div class="modal hidden"> 
-      <div class="modal__dialog"> 
-        <div class="modal__dialog--content"> 
-          <div class="modal__content--header"> 
-            <div>
-              <button class='modal__button--back' onClick='closeModalDialog()'>
-                Back
-              </button>
-            </div>
-            <img class="modal__dialog--image js-modal__image" src="" alt="">
-            <h3 class="modal--title"></h3> 
-          </div> 
-          <div class="modal__body">
-            <p class="modal__body--about-pet"></p>
-            <p class="modal__body--breed"></p>
-            <p class="modal__body--sex"></p>
-            <p class="modal__body--age"></p>
-            <p class="modal__body--adoptionProcess"></p>
-            <a href="" class="modal__body--org-link" target="_blank"></a>
-            <p class="modal__body--map-link"></p>
-          </div> 
-          <div class="modal__footer">
+    <section class="main__section">
+      <div class="modal hidden"> 
+        <div class="modal__dialog"> 
+          <div class="modal__dialog--content"> 
+            <div class="modal__content--header"> 
+              <div>
+                <button class='modal__button--back' onClick='closeModalDialog()'>
+                  Back
+                </button>
+              </div>
+              <img class="modal__dialog--image js-modal__image" src="" alt="">
+              <h3 class="modal--title"></h3> 
+            </div> 
+            <div class="modal__body">
+              <p class="modal__body--about-pet"></p>
+              <p class="modal__body--breed"></p>
+              <p class="modal__body--sex"></p>
+              <p class="modal__body--age"></p>
+              <p class="modal__body--adoptionProcess"></p>
+              <a href="" class="modal__body--org-link" target="_blank"></a>
+              <p class="modal__body--map-link"></p>
+            </div> 
+            <div class="modal__footer">
+            </div> 
           </div> 
         </div> 
       </div> 
-    </div> 
 
-    <form>
-      <label for="zipcode"></label>
-      <input type="number" class="js-zipcode-input" maxlength="5" placeholder="Zipcode" required>
-      <input type="submit" value="Search">
-    </form>
+      <form>
+        <label for="zipcode"></label>
+        <input type="number" class="js-zipcode-input" maxlength="5" placeholder="Zipcode" required>
+        <input type="submit" value="Search">
+      </form>
 
-    <div class="filters js-filters">
-      <input type="button" class="filters__button-input js-filters--dogs" value="Dogs">
-      <input type="button" class="filters__button-input js-filters--cats" value="Cats">
-      <input type="reset" class="filters__reset-input js-filters--clear" value="Clear">
-    </div>
+      <section class="filters js-filters">
+        <input type="button" class="filters__button-input js-filters--dogs" value="Dogs">
+        <input type="button" class="filters__button-input js-filters--cats" value="Cats">
+        <input type="reset" class="filters__reset-input js-filters--clear" value="Clear">
+      </section>
 
-    <div>
-      <ul class="results js-results">
-      </ul>
-    </div>
+      <div>
+        <div class="results">
+          <div>
+            <div class="results--column js-results--column">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
   <script src="app.js"></script>
