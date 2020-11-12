@@ -190,11 +190,6 @@ function fetchPetData(zipcode = 80203) {
   .catch(error => console.log('error', error))
 }
 
-/* <a href="https://twitter.com/share?text=See%20this%20Pet%20available%20for%20%40adoption!&url=https%3A%2F%2Fwww.instagram.com%2Fp%2FCHeS161nnOW%2F%3Futm_source%3Dig_web_button_share_sheet" class="twitter-share-button" data-show-count="false">
-Tweet
-</a>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>  */
-
 /* LISTENER FUNCTION
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 function onZipCodeSearch() {
@@ -202,7 +197,7 @@ function onZipCodeSearch() {
     e.preventDefault()
     const zipcode = $('.js-zipcode-input').val()
     console.log("submitted", zipcode)
-    fetchData(zipcode)
+    fetchPetData(zipcode)
   })
 }
 
