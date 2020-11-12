@@ -163,10 +163,19 @@ function fetchData(zipcode = 80203) {
 
   // Fetch Cats
   fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=10&fields=[breeds]=name`, requestOptions)
-  .then(response => response.json())
+  .then(response => {
+    if (response.ok) {
+      return response.json()
+    }
+    throw new Error(response.statusText)
+  })
   .then(responseJson => {
-    storePetResults(responseJson)
-    console.log(responseJson)
+    if (responseJson.meta.count === 0) {
+      renderError("no-results")
+    } else {
+      console.log("responseJson",responseJson)
+      storePetResults(responseJson)
+    }
   })
   .catch(error => console.log('error', error))
 }
@@ -213,6 +222,8 @@ function onExpandAboutText() {
     let id = $(this).attr('data-id')
     let pet = getPetFromStore(id)
     let aboutText = pet.attributes.descriptionText
+
+    // render expanded pet description text
     $(this).closest('.content__section--about').html(`<span class="about__description-text overflow"><b>ABOUT</b> ${aboutText}</span>`)
   })
 }
@@ -231,8 +242,8 @@ function renderError(error) {
       message = 'something went wrong. Please refresh or try again.'
   }
 
-  $('.js-results').empty()
-  $('.js-results').append(
+  $('.js-results--column').empty()
+  $('.js-results--column').append(
     `<li class="product">
       <p>Sorry, ${message}</p>
     </li>`
