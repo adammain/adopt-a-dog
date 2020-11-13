@@ -219,11 +219,7 @@ function onProductClick() {
 function onShareClick() {
   $('.js-email-button').click(function(e) {
     const id = $(this).closest('article').attr('data-id')
-    console.log("id", id)
     const petObj = getPetFromStore(id)
-    console.log("petObj", petObj, id)
-    // ${petObj.organization.name}
-    // ${petObj.attributes.name}
     window.location.href = `mailto:?&subject=Pet available for adoption from ${petObj.organization.name}&body=Pet Name: ${petObj.attributes.name}  //  Agency URL: ${petObj.organization.url}`
   })
 }
@@ -362,14 +358,19 @@ function renderResults() {
           </div>
           <div class="product__detail--content">
             <section class="content__section">
-              <span class="content__section--name">
-                 <b>ORGANIZATION</b> ${results[i+1].organization.name}
-              </span>
+              <button class="content__section--button js-email-button">
+                <div class="section__button--icon">
+                  <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
+                </div>
+              </button>
               <button class="content__section--button " type="button">
                 <div class="section__button--icon ">
                   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i+1].attributes.name}! She is an adorable pet available for adoption in ${results[i+1].organization.citystate}!" data-url="${results[i+1].organization.url}" data-lang="en" data-dnt="true" data-show-count="false"></a>
                 </div>
               </button>
+            </section>
+            <section class="content__section--name">
+              <span><b>ORGANIZATION</b> ${results[i+2].organization.name}</span>
             </section>
             <section>
               <span class="content__section--about">
@@ -400,14 +401,19 @@ function renderResults() {
           </div>
           <div class="product__detail--content">
             <section class="content__section">
-              <span class="content__section--name">
-                 <b>ORGANIZATION</b> ${results[i+2].organization.name}
-              </span>
+              <button class="content__section--button js-email-button">
+                <div class="section__button--icon">
+                  <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
+                </div>
+              </button>
               <button class="content__section--button " type="button">
                 <div class="section__button--icon">
                   <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i+2].attributes.name}! She is an adorable pet available for adoption in ${results[i+2].organization.citystate}!" data-url="${results[i+2].organization.url}" data-lang="en" data-dnt="true" data-show-count="false"></a>
                 </div>
               </button>
+            </section>
+            <section class="content__section--name">
+              <span><b>ORGANIZATION</b> ${results[i+2].organization.name}</span>
             </section>
             <section>
               <span class="content__section--about">
