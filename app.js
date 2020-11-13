@@ -212,6 +212,7 @@ function onFilter() {
   })
   $('.js-filters--clear').click(function() {
     STORE.filter = 'none'
+    $('.js-zipcode-input').empty()
     renderResults()
   })
 }
@@ -225,7 +226,7 @@ function onProductClick() {
 }
 
 function onShareClick() {
-  $('.content__section--button').click(function(e) {
+  $('.js-email-button').click(function(e) {
     const id = $(this).closest('article').attr('.data-id')
     const petObj = getPetFromStore(id)
     // TODO: Finish share popup with email or twitter
@@ -271,6 +272,7 @@ function renderError(error) {
 function renderResults() {
   console.log("`renderResults`, ran", { ...STORE.dogs, ...STORE.cats })
   let results 
+
   // Apply filters or display all results
   switch(STORE.filter) {
     case 'cats': 
@@ -289,7 +291,7 @@ function renderResults() {
   // Create list element for each result and add to DOM
   for (let i = 0; i < results.length - 2; i += 3) {
 
-    // Expansion button for next 3 results in row
+    // Expansion button for next 3 results in row (desktop view)
     let aboutStringOne = results[i].attributes.descriptionText 
       ? textTruncate(results[i].attributes.descriptionText, 200, `...<button class="button--expand js-button--expand" data-id="${results[i].id}">more</button>`) 
       : "No Description"
@@ -303,8 +305,11 @@ function renderResults() {
     $('.js-results--column').append(
       `<div class="results__row">
         <article class="product" data-id="${results[i].id}">
-          <header>
-            <div>
+          <header class="product__header">
+            <div class="header__profile">
+              <span class="header__profile-pic">
+                <img src="${results[i].attributes.pictureThumbnailUrl}" class="profile-pic">
+              </span>
               <span class="header--pet-name">
                 ${results[i].attributes.name}
               </span>
@@ -319,16 +324,19 @@ function renderResults() {
           </div>
           <div class="product__detail--content">
             <section class="content__section">
-              <span class="content__section--name">
-                 <b>ORGANIZATION</b> ${results[i].organization.name}
-              </span>
-              <button class="content__section--button" type="button">
+              <button class="content__section--email js-email-button">
                 <div class="section__button--icon">
-                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i].attributes.name}! She is an adorable pet available for adoption in ${results[i].organization.citystate}!" data-url="${results[i].organization.url}" data-lang="en" data-dnt="true" data-show-count="false">
-                    <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
-                  </a>
+                  <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
                 </div>
               </button>
+              <button class="content__section--button" type="button">
+                <div class="section__button--icon">
+                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i].attributes.name}! She is an adorable pet available for adoption in ${results[i].organization.citystate}!" data-url="${results[i].organization.url}" data-lang="en" data-dnt="true" data-show-count="false"></a>
+                </div>
+              </button>
+            </section>
+            <section class="content__section--name">
+              <span><b>ORGANIZATION</b> ${results[i].organization.name}</span>
             </section>
             <section>
               <span class="content__section--about">
@@ -340,8 +348,11 @@ function renderResults() {
         </article>
 
         <article class="product" data-id="${results[i+1].id}">
-          <header>
-            <div>
+          <header class="product__header">
+            <div class="header__profile">
+              <span class="header__profile-pic">
+                <img src="${results[i+1].attributes.pictureThumbnailUrl}" class="profile-pic">
+              </span>
               <span class="header--pet-name">
                 ${results[i+1].attributes.name}
               </span>
@@ -361,9 +372,7 @@ function renderResults() {
               </span>
               <button class="content__section--button " type="button">
                 <div class="section__button--icon ">
-                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i+1].attributes.name}! She is an adorable pet available for adoption in ${results[i+1].organization.citystate}!" data-url="${results[i+1].organization.url}" data-lang="en" data-dnt="true" data-show-count="false">
-                    <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
-                  </a>
+                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i+1].attributes.name}! She is an adorable pet available for adoption in ${results[i+1].organization.citystate}!" data-url="${results[i+1].organization.url}" data-lang="en" data-dnt="true" data-show-count="false"></a>
                 </div>
               </button>
             </section>
@@ -377,8 +386,11 @@ function renderResults() {
         </article>
 
         <article class="product" data-id="${results[i+2].id}">
-          <header>
-            <div>
+          <header class="product__header">
+            <div class="header__profile">
+              <span class="header__profile-pic">
+                <img src="${results[i+2].attributes.pictureThumbnailUrl}" class="profile-pic">
+              </span>
               <span class="header--pet-name">
                 ${results[i].attributes.name}
               </span>
@@ -398,9 +410,7 @@ function renderResults() {
               </span>
               <button class="content__section--button " type="button">
                 <div class="section__button--icon">
-                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i+2].attributes.name}! She is an adorable pet available for adoption in ${results[i+2].organization.citystate}!" data-url="${results[i+2].organization.url}" data-lang="en" data-dnt="true" data-show-count="false">
-                    <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
-                  </a>
+                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Check out ${results[i+2].attributes.name}! She is an adorable pet available for adoption in ${results[i+2].organization.citystate}!" data-url="${results[i+2].organization.url}" data-lang="en" data-dnt="true" data-show-count="false"></a>
                 </div>
               </button>
             </section>
@@ -417,7 +427,7 @@ function renderResults() {
     )
   }
 
-  // Initialize product result listener 
+  // Initialize listeners needed for results interactivity
   onProductClick() 
   onExpandAboutText()
   onShareClick()
@@ -450,5 +460,15 @@ function closeModalDialog() {
 
 // UP NEXT
 
-// o Add share link functionality: Twiiter and Email
-// o Add breed link to open modal for breed details API
+// o Add share link functionality: Twitter and Email
+// o Clean up share styling
+// o Clean up desktop results views
+// o Clean up mobile filter and search styling
+// o Clean up desktop filter and search styling
+// o Clean up mobile details page styling
+// o Clean up desktop details page styling
+// o Add breed link to open modal for breed details API?
+
+// REVIEW APP GRADING CRITERIA
+
+// Share icon: <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
