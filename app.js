@@ -48,15 +48,6 @@ function textTruncate(str, length, ending) {
   }
 }
 
-// FORMAT QUERY FOR API REQUEST
-function formatQueryParams(params) {
-  console.log('`formatQueryParams` ran')
-  console.log('params=', params)
-  let queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${params[key]}`)
-  console.log("queryItems", queryItems.join('&') )
-  // return queryItems.join('&') 
-}
-
 /* INITIALIZE APP
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 function initialize(){
@@ -227,9 +218,13 @@ function onProductClick() {
 
 function onShareClick() {
   $('.js-email-button').click(function(e) {
-    const id = $(this).closest('article').attr('.data-id')
+    const id = $(this).closest('article').attr('data-id')
+    console.log("id", id)
     const petObj = getPetFromStore(id)
-    // TODO: Finish share popup with email or twitter
+    console.log("petObj", petObj, id)
+    // ${petObj.organization.name}
+    // ${petObj.attributes.name}
+    window.location.href = `mailto:?&subject=Pet available for adoption from ${petObj.organization.name}&body=Pet Name: ${petObj.attributes.name}  //  Agency URL: ${petObj.organization.url}`
   })
 }
 
@@ -324,7 +319,7 @@ function renderResults() {
           </div>
           <div class="product__detail--content">
             <section class="content__section">
-              <button class="content__section--email js-email-button">
+              <button class="content__section--button js-email-button">
                 <div class="section__button--icon">
                   <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
                 </div>
