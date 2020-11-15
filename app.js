@@ -118,6 +118,8 @@ function storePetResults(results) {
           break;
       }
     } // End of "included" loop
+
+    // *** Break out nested loops to two seperate loops
   
     // STORE RESULTS INTO STORE
     petResult.species === 'Dog' ? STORE.dogs.push(petResult) : STORE.cats.push(petResult) 
@@ -224,7 +226,6 @@ function onShareClick() {
   })
 }
 
-// TODO: create render function for expansion?
 // Listen for the 'more' button -> expand truncated about text
 function onExpandAboutText() {
   $('.js-button--expand').click(function(e) {
@@ -274,6 +275,7 @@ function renderResults() {
       break;
     default:
       results = shuffle([ ...STORE.dogs, ...STORE.cats ])
+      // TODO: Move shuffle to search someplace, keep filters in place
   }
 
   // Clear previous displayed results
@@ -461,15 +463,15 @@ function closeModalDialog() {
 
 // UP NEXT
 
-// o Add share link functionality: Twitter and Email
-// o Clean up share styling
-// o Clean up desktop results views
 // o Clean up mobile filter and search styling
 // o Clean up desktop filter and search styling
-// o Clean up mobile details page styling
+// o Add cursor to images 
+// o Clean up mobile details page styling (also make it's window smaller and in the center with darkened background)
 // o Clean up desktop details page styling
 // o Add breed link to open modal for breed details API?
 
 // REVIEW APP GRADING CRITERIA
 
 // Share icon: <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
+
+// Instaed of shuffle on render shuffle on search

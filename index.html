@@ -14,7 +14,27 @@
 
 <body>
   <header class="grid jc-center">
+    <div class="header__title">
       <h1>Find your perfect pet.</h1>
+      <span>Search for pets near your zipcode.</span>
+      <span>Filter by Dogs or Cats.</span>
+    </div>
+
+    <div class="form__container">
+      <form class="form__search">
+        <div class="table">
+          <div class="table-cell">
+            <input type="number" placeholder="Zipcode" class="table-cell__input js-zipcode-input" maxlength="5" required>
+          </div>
+          <div class="table-cell" id="s-cover">
+            <button class="table-cell__button" type="submit">
+              <div id="s-circle"></div>
+              <span class="button__span"></span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </header>
   <main>
     <section class="main__section">
@@ -45,12 +65,11 @@
         </div> 
       </div> 
 
-      <form>
+      <!-- <form class="form__search">
         <label for="zipcode"></label>
         <input type="number" class="js-zipcode-input" maxlength="5" placeholder="Zipcode" required>
         <input type="submit" value="Search">
-      </form>
-      <div class="twittertest"></div>
+      </form> -->
       <section class="filters js-filters">
         <input type="button" class="filters__button-input js-filters--dogs" value="Dogs">
         <input type="button" class="filters__button-input js-filters--cats" value="Cats">
