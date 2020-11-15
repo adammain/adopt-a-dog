@@ -226,7 +226,17 @@ function onProductClick() {
   $('.product--container').click(function(e) {
     const petId = $(this).closest('article').attr('data-id')
     console.log('product clicked', petId)
+    $('body').addClass('modal--open')
     renderModalDialog(petId)
+
+    // Below makes sure any click outside of modal closes modal
+    e.stopPropagation()
+    $(document).click(function() {
+      closeModalDialog()
+    })
+    $('.js-dialog--listener').click(function(e) {
+      e.stopPropagation()
+    })
   })
 }
 
@@ -469,17 +479,17 @@ function renderModalDialog(id) {
 }
 
 function closeModalDialog() {
+  $('body').removeClass('modal--open')
   $('.modal').addClass('hidden')
 }
 
 
 // UP NEXT
 
-// o Clean up mobile filter and search styling
-// o Clean up desktop filter and search styling
-// o Add cursor to images 
 // o Clean up mobile details page styling (also make it's window smaller and in the center with darkened background)
 // o Clean up desktop details page styling
+// o Make product card "name" linkable to details page.
+// o Replace filter button text with icons?
 // o Add breed link to open modal for breed details API?
 
 // REVIEW APP GRADING CRITERIA
