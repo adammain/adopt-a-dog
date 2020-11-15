@@ -195,16 +195,28 @@ function onZipCodeSearch() {
 }
 
 function onFilter() {
+  $('.filters__button-input').click(function() {
+    $('.js-filters--dogs').removeClass('filter--selected')
+    $('.js-filters--cats').removeClass('filter--selected')
+    $('.js-filters--clear').removeClass('filter--selected')
+  })
+
   $('.js-filters--dogs').click(function() {
     STORE.filter = 'dogs'
+    $('.js-filters--dogs').addClass('filter--selected')
+    $('.js-text--dogs').wrap('<u></u>')
     renderResults()
   })
+
   $('.js-filters--cats').click(function() {
     STORE.filter = 'cats'
+    $('.js-filters--cats').addClass('filter--selected')
     renderResults()
   })
+
   $('.js-filters--clear').click(function() {
     STORE.filter = 'none'
+    $('.js-filters--clear').addClass('filter--selected')
     $('.js-zipcode-input').empty()
     renderResults()
   })

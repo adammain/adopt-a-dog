@@ -15,9 +15,9 @@
 <body>
   <header class="grid jc-center">
     <div class="header__title">
-      <h1>Find your perfect pet.</h1>
-      <span>Search for pets near your zipcode.</span>
-      <span>Filter by Dogs or Cats.</span>
+      <h1 class="title--bold">Find your perfect pet.</h1>
+      <span class="sub-title--bold">Search for pets near your zipcode.</span>
+      <span class="sub-title--bold">Filter by Dogs or Cats.</span>
     </div>
 
     <div class="form__container">
@@ -71,9 +71,10 @@
         <input type="submit" value="Search">
       </form> -->
       <section class="filters js-filters">
-        <input type="button" class="filters__button-input js-filters--dogs" value="Dogs">
-        <input type="button" class="filters__button-input js-filters--cats" value="Cats">
-        <input type="reset" class="filters__reset-input js-filters--clear" value="Clear">
+        <span class="filters__label"><b>Filter:</b>&nbsp;</span>
+        <button class="filters__button-input js-filters--dogs">Dogs</button>
+        <button class="filters__button-input js-filters--cats">Cats</button>
+        <button class="filters__button-input js-filters--clear filter--selected">All</button>
       </section>
 
       <div>
