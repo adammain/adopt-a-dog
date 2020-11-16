@@ -579,7 +579,7 @@ button span:before, button span:after {
 
 @media (min-width: 576px) {
   main {
-    background-color: #fafafa;
+    background-color: #f6f7fb;
   }
 
   .filters__button-input {
