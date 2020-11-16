@@ -11,30 +11,40 @@ Search and find pets (dogs or cats) available for adoption from highly reputable
 
 As a animal lover, I wanted an easy way to search dogs available for adoption in my city without having to research all the adoption agencies in my area.  With this app, you can search almost trustworthy adoption agencies without having to visit their sites invidually. 
 
+## Features & Use Summary
+
+* Search for adoptable pets near given zipcode
+* Filter results by dog or cat (additional filtrs in progress)
+* View individual pet and adoption agency details
+* Share favorite pets on twitter or with email
+* Fully responsive for mobile screens
+
 ## Screenshots
-Landing Page Desktop:
+### Landing Page Desktop:
 
 ![landing page desktop](screenshots/landing-desktop.png)
 
-Landing Page Mobile:
+### Landing Page Mobile:
+
 ![landing page mobile](screenshots/landing-mobile.png)
 
-Filtered Results Desktop:
+### Filtered Results Desktop:
 
 ![filtered results](screenshots/filtered-results.png)
 
-Filtered Results Mobile:
+### Filtered Results Mobile:
+
 ![filtered results mobile](screenshots/mobile-results.png)
 
-Pet Detail:
+### Pet Detail:
 
 ![pet detail](screenshots/pet-detail.png)
 
-Share on Twitter:
+### Share on Twitter:
 
 ![twitter](screenshots/twitter-share.png)
 
-Share with Email:
+### Share with Email:
 
 ![email](screenshots/email-share.png)
 
@@ -44,14 +54,6 @@ Share with Email:
 * HTML/CSS
 * JavaScript
 * Jquery
-
-## Features & Use Summary
-
-* Search for adoptable pets near given zipcode
-* Filter results by dog or cat (additional filtrs in progress)
-* View individual pet and adoption agency details
-* Share favorite pets on twitter or with email
-* Fully responsive for mobile screens
 
 ## Demo
 
