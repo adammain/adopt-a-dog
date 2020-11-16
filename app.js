@@ -147,7 +147,7 @@ function fetchPetData(zipcode = 80203) {
   };
   
   // Fetch Dogs
-  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=10&fields=[breeds]=name`, requestOptions)
+  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=40&fields=[breeds]=name`, requestOptions)
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -165,7 +165,7 @@ function fetchPetData(zipcode = 80203) {
     .catch(error => console.log('error', error))
 
   // Fetch Cats
-  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=10&fields=[breeds]=name`, requestOptions)
+  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=20&fields=[breeds]=name`, requestOptions)
   .then(response => {
     if (response.ok) {
       return response.json()
@@ -465,14 +465,16 @@ function renderModalDialog(id) {
   if (pet) {
     $('.modal').removeClass('hidden')
     $('.js-modal__image').attr('src', `${pet.pictures.large.url}`)
+    $('.header__profile-pic').html(`<img src="${pet.attributes.pictureThumbnailUrl}" class="profile-pic">`)
+    $('.header--pet-name').text(`${pet.attributes.name} - Available`)
+    $('.modal__body--organization').html(`<b>Organization: </b>${pet.organization.name} &#183; <a href="${pet.organization.url}" class="modal__body--org-link" target="_blank"><b>Website</b></a></span>`)
     $('.modal--title').text(`Hi, my name is ${pet.attributes.name}!`)
-    $('.modal__body--about-pet').append(`${pet.attributes.descriptionText}`)
-    $('.modal__body--breed').text(`${pet.attributes.breedString}`)
-    $('.modal__body--sex').text(`${pet.attributes.sex}`)
-    $('.modal__body--age').text(`${pet.attributes.ageString}`)
-    $('.modal__body--adoptionProcess').text(`Adoption Process: ${pet.organization.adoptionProcess}`)
-    $('.modal__body--org-link').attr('href',`${pet.organization.url}`).text(`${pet.organization.name}`)
-    $('.modal__body--map-link').text(`Map Link Here`)
+    $('.modal__body--about-pet').html(`<b>About Me: </b> ${pet.attributes.descriptionText}`)
+    $('.modal__body--breed').html(`<b>Breed: </b> ${pet.attributes.breedString}`)
+    $('.modal__body--sex').html(`<b>Sex: </b> ${pet.attributes.sex}`)
+    $('.modal__body--age').html(`<b>Age: </b> ${pet.attributes.ageString}`)
+    $('.modal__body--adoptionProcess').html(`<b>Adoption Process: </b> ${pet.organization.adoptionProcess}`)
+    // $('.modal__body--map-link').text(`Map Link Here`)
   } else {
     renderError('broken')
   }

@@ -41,37 +41,39 @@
       <div class="modal hidden"> 
         <div class="modal__dialog"> 
           <div class="modal__dialog--content"> 
-            <div class="js-dialog--listener">
-              <div class="modal__content--header"> 
+            <article class="article__modal js-dialog--listener">
+              <div>
+                <button class='modal__button--back' onClick='closeModalDialog()'>
+                  <svg heigh="25px" width="25px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 477.862 477.862" style="enable-background:new 0 0 477.862 477.862;" xml:space="preserve">
+                    <path d="M187.722,102.856V17.062C187.719,7.636,180.076-0.003,170.65,0c-4.834,0.001-9.44,2.053-12.676,5.644L4.375,176.311    c-5.617,6.256-5.842,15.67-0.529,22.187l153.6,187.733c5.968,7.295,16.72,8.371,24.016,2.403c3.952-3.233,6.249-8.066,6.26-13.172    v-85.043c134.827,4.386,218.965,62.02,256.888,175.787c2.326,6.96,8.841,11.653,16.179,11.656c0.92,0.003,1.84-0.072,2.748-0.222    c8.256-1.347,14.319-8.479,14.319-16.845C477.855,259.818,356.87,112.174,187.722,102.856z"/>
+                  </svg>
+                </button>
                 <div>
-                  <button class='modal__button--back' onClick='closeModalDialog()'>
-                    Back
-                  </button>
+                  <img class="modal__dialog--image js-modal__image" src="" alt="">
                 </div>
-                <img class="modal__dialog--image js-modal__image" src="" alt="">
-                <h3 class="modal--title"></h3> 
-              </div> 
+              </div>
               <div class="modal__body">
-                <p class="modal__body--about-pet"></p>
-                <p class="modal__body--breed"></p>
-                <p class="modal__body--sex"></p>
-                <p class="modal__body--age"></p>
-                <p class="modal__body--adoptionProcess"></p>
-                <a href="" class="modal__body--org-link" target="_blank"></a>
-                <p class="modal__body--map-link"></p>
-              </div> 
-              <div class="modal__footer">
-              </div> 
-            </div>
+                <header class="modal__content--header">
+                  <div class="header__profile">
+                    <span class="header__profile-pic"></span>
+                    <span class="header--pet-name"></span>
+                  </div>
+                </header>
+                <div class="modal__body--details">
+                  <span class="modal__body--organization"></span><br/>
+                  <span class="modal__body--adoptionProcess"></span><br/>
+                  <span class="modal__body--breed"></span><br/>
+                  <span class="modal__body--sex"></span><br/>
+                  <span class="modal__body--age"></span><br/>
+                  <span class="modal__body--about-pet"></span><br/>
+                </div>
+                <div class="modal__footer"></div> 
+              </div>
+            </article>
           </div> 
         </div> 
       </div> 
 
-      <!-- <form class="form__search">
-        <label for="zipcode"></label>
-        <input type="number" class="js-zipcode-input" maxlength="5" placeholder="Zipcode" required>
-        <input type="submit" value="Search">
-      </form> -->
       <section class="filters js-filters">
         <span class="filters__label"><b>Filter:</b>&nbsp;</span>
         <button class="filters__button-input js-filters--dogs">Dogs</button>

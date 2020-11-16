@@ -489,7 +489,7 @@ button span:before, button span:after {
 
  /*
  *
- * Product Details Popup
+ * Modal
  *
  */
 .hidden {
@@ -499,6 +499,18 @@ button span:before, button span:after {
 .modal--open {
   overflow: hidden;
   position: fixed;
+}
+
+.modal__button--back {
+  border: none;
+  cursor: pointer;
+  width: 50px;
+  background-color: transparent;
+  position: absolute;
+  left: 0;
+  top: 0;
+  fill: white;
+  z-index: 100;
 }
 
 .modal {
@@ -519,7 +531,23 @@ button span:before, button span:after {
 }
 
 .modal__dialog--content {
-  padding: 20px;
+  
+}
+
+.modal__content--header {
+  border-left: 1px solid #efefef;
+  border-left: 1px solid rgba(var(--ce3,239,239,239),1);
+  padding: 16px;
+  right: 0;
+  width: 335px;
+  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid rgba(var(--ce3,239,239,239),1);
+  height: 32px;
+}
+
+.article__modal {
+  display: flex;
+  flex-direction: column;
 }
 
 .modal__dialog--image {
@@ -527,8 +555,18 @@ button span:before, button span:after {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
-  height: 200px;
+  width: 100%;
+}
+
+.modal__body {
+  -webkit-flex-shrink: unset; 
+  -ms-flex-negative: unset;
+  flex-shrink: unset;
+}
+
+.modal__body--details {
+  padding: 10px;
+  font-size: small;
 }
 
 /* ––––––––––––––––––––––––––––––––––––––––––––––– 
@@ -595,67 +633,67 @@ button span:before, button span:after {
   #s-cover {
     width: 1px;
     padding-left: 28px;
-}
+  }
 
-.button {
-  position: relative;
-  display: block;
-  width: 84px;
-  height: 96px;
-}
+  .button {
+    position: relative;
+    display: block;
+    width: 84px;
+    height: 96px;
+  }
 
-.table-cell__button {
-  cursor: pointer;
-}
+  .table-cell__button {
+    cursor: pointer;
+  }
 
-#s-circle {
-  position: relative;
-  top: -2px;
-  left: -11px;
-  width: 25px;
-  height: 25px;
-  margin-top: 0;
-  border-width: 5px;
-  border: 6px solid #dadada;
-  background-color: transparent;
-  border-radius: 50%;
-  transition: 0.5s ease all;
-}
+  #s-circle {
+    position: relative;
+    top: -2px;
+    left: -11px;
+    width: 25px;
+    height: 25px;
+    margin-top: 0;
+    border-width: 5px;
+    border: 6px solid #dadada;
+    background-color: transparent;
+    border-radius: 50%;
+    transition: 0.5s ease all;
+  }
 
-.button__span {
-  position: absolute;
-  top: 68px;
-  left: 43px;
-  display: block;
-  width: 32px;
-  height: 12px;
-  background-color: transparent;
-  border-radius: 5px;
-  transform: rotateZ(52deg);
-  transition: 0.5s ease all;
-}
+  .button__span {
+    position: absolute;
+    top: 68px;
+    left: 43px;
+    display: block;
+    width: 32px;
+    height: 12px;
+    background-color: transparent;
+    border-radius: 5px;
+    transform: rotateZ(52deg);
+    transition: 0.5s ease all;
+  }
 
-button span:before, button span:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 38px;
-  height: 11px;
-  background-color: #dadada;
-  border-radius: 5px;
-  transform: rotateZ(0);
-  transition: 0.5s ease all;
-}
+  button span:before, button span:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 38px;
+    height: 11px;
+    background-color: #dadada;
+    border-radius: 5px;
+    transform: rotateZ(0);
+    transition: 0.5s ease all;
+  }
 
-#s-cover:hover #s-circle {
-  top: 0px;
-  width: 56px;
-  height: 12px;
-  border-width: 0;
-  background-color: #dadada;
-  border-radius: 20px;
-}
+  #s-cover:hover #s-circle {
+    top: 0px;
+    width: 56px;
+    height: 12px;
+    border-width: 0;
+    background-color: #dadada;
+    border-radius: 20px;
+  }
 
   #s-cover:hover span {
     top: 50%;
@@ -678,6 +716,64 @@ button span:before, button span:after {
     right: -6px;
     width: 40px;
     background-color: #dadada;
+  }
+
+  /*
+  *
+  * Modal
+  *
+  */
+
+  .modal--open {
+    overflow: hidden;
+    position: fixed;
+  }
+  
+  .modal__button--back {
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    background-color: transparent;
+    position: absolute;
+    left: 0;
+    top: 0;
+    fill: white;
+    z-index: 100;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0vh;
+    left: 0vw;
+    width: 100vw;
+    height: 100%;
+    z-index: 9;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: white;
+  }
+  
+  .modal__dialog {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .modal__dialog--content {
+    
+  }
+  
+  .modal__content--header {
+    height: 35px;
+  }
+  
+  .modal__dialog--image {
+    width: 500px;
+    height: 500px;
+  }
+
+  .article__modal {
+    display: flex;
+    flex-direction: row;
   }
 
 }
