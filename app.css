@@ -145,6 +145,10 @@ nav, a, button {
   color: #000;
 }
 
+.icon__fallback-text {
+  display: none;
+}
+
 .filters__button-input {
   border-top-style: hidden;
   border-right-style: hidden;
@@ -161,12 +165,12 @@ nav, a, button {
 }
 
 .filters__button-input:hover {
-  background-color: #f5f5f5;
+  background-color: #d4d4de;
   border-radius: 20%;
 }
 
 .filters__button-input:focus {
-  background-color: #f0efef;
+  background-color: #d4d4de;
   border-radius: 20%;
 }
 
@@ -588,16 +592,6 @@ button span:before, button span:after {
 
   .filters__button-input {
     background-color: #f0f1f5;
-    border-radius: 20%;
-  }
-
-  .filters__button-input:hover {
-    background-color: #efeff0;
-    border-radius: 20%;
-  }
-  
-  .filters__button-input:focus {
-    background-color: #e6e6e6;
     border-radius: 20%;
   }
 

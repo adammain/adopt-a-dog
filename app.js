@@ -118,8 +118,6 @@ function storePetResults(results) {
           break;
       }
     } // End of "included" loop
-
-    // *** Break out nested loops to two seperate loops
   
     // STORE RESULTS INTO STORE
     petResult.species === 'Dog' ? STORE.dogs.push(petResult) : STORE.cats.push(petResult) 
@@ -182,7 +180,7 @@ function fetchPetData(zipcode = 80203) {
   .catch(error => console.log('error', error))
 }
 
-/* LISTENER FUNCTION
+/* LISTENER FUNCTIONS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 function onZipCodeSearch() {
   $('form').submit(function(e) {
@@ -192,6 +190,7 @@ function onZipCodeSearch() {
   })
 }
 
+// Filter results and re-render
 function onFilter() {
   $('.filters__button-input').click(function() {
     $('.js-filters--dogs').removeClass('filter--selected')
@@ -238,6 +237,7 @@ function onProductClick() {
   })
 }
 
+// Email details of clicked pet
 function onShareClick() {
   $('.js-email-button').click(function(e) {
     const id = $(this).closest('article').attr('data-id')
@@ -451,12 +451,12 @@ function renderResults() {
   onProductClick() 
   onExpandAboutText()
   onShareClick()
-  twttr.widgets.load()
+  twttr.widgets.load() // loads twitter api with specific pet details AFTER results rendered 
 } // end renderResults()
 
 function renderModalDialog(id) {
   const pet = getPetFromStore(id)
-  
+
   if (pet) {
     $('.modal').removeClass('hidden')
     $('.js-modal__image').attr('src', `${pet.pictures.large.url}`)
@@ -479,16 +479,3 @@ function closeModalDialog() {
   $('body').removeClass('modal--open')
   $('.modal').addClass('hidden')
 }
-
-
-// UP NEXT
-
-// o Make product card "name" linkable to details page.
-// o Replace filter button text with icons?
-// o Add breed link to open modal for breed details API?
-
-// REVIEW APP GRADING CRITERIA
-
-// Share icon: <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
-
-// Instaed of shuffle on render shuffle on search
