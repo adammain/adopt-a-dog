@@ -16,14 +16,18 @@ As a animal lover, I wanted an easy way to search dogs available for adoption in
 ![Build Status](https://github.com/adammain/perfect-pet/commits/main)
 
 ## Screenshots
-Landing Page Desktop/Mobile:
+Landing Page Desktop:
 
 ![landing page desktop](screenshots/landing-desktop.png)
+
+Landing Page Mobile:
 ![landing page mobile](screenshots/landing-mobile.png)
 
-Filtered Results Desktop/Mobile:
+Filtered Results Desktop:
 
 ![filtered results](screenshots/filtered-results.png)
+
+Filtered Results Mobile:
 ![filtered results mobile](screenshots/mobile-results.png)
 
 Pet Detail:
