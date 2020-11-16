@@ -162,7 +162,10 @@ function fetchPetData(zipcode = 80203) {
         storePetResults(responseJson)
       }
     })
-    .catch(error => console.log('error', error))
+    .catch(error => {
+      console.log('error', error)
+      location.reload(true)
+    })
 
   // Fetch Cats
   fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=20&fields=[breeds]=name`, requestOptions)
@@ -223,7 +226,7 @@ function onFilter() {
 }
 
 function onProductClick() {
-  $('.product--container').click(function(e) {
+  $('.js-product--click').click(function(e) {
     const petId = $(this).closest('article').attr('data-id')
     console.log('product clicked', petId)
     $('body').addClass('modal--open')
@@ -323,14 +326,14 @@ function renderResults() {
           <header class="product__header">
             <div class="header__profile">
               <span class="header__profile-pic">
-                <img src="${results[i].attributes.pictureThumbnailUrl}" class="profile-pic">
+                <img src="${results[i].attributes.pictureThumbnailUrl}" class="profile-pic js-product--click">
               </span>
-              <span class="header--pet-name">
+              <span class="header--pet-name js-product--click">
                 ${results[i].attributes.name}
               </span>
             </div>
           </header>
-          <div class="product--container">
+          <div class="product--container js-product--click">
             <img 
               src="${results[i].pictures.large.url}" 
               alt=""
@@ -350,7 +353,7 @@ function renderResults() {
                 </div>
               </button>
             </section>
-            <section class="content__section--name">
+            <section class="content__section--name js-product--click">
               <span><b>ORGANIZATION</b> ${results[i].organization.name}</span>
             </section>
             <section>
@@ -366,14 +369,14 @@ function renderResults() {
           <header class="product__header">
             <div class="header__profile">
               <span class="header__profile-pic">
-                <img src="${results[i+1].attributes.pictureThumbnailUrl}" class="profile-pic">
+                <img src="${results[i+1].attributes.pictureThumbnailUrl}" class="profile-pic js-product--click">
               </span>
-              <span class="header--pet-name">
+              <span class="header--pet-name js-product--click">
                 ${results[i+1].attributes.name}
               </span>
             </div>
           </header>
-          <div class="product--container">
+          <div class="product--container js-product--click">
             <img 
               src="${results[i+1].pictures.large.url}" 
               alt=""
@@ -409,14 +412,14 @@ function renderResults() {
           <header class="product__header">
             <div class="header__profile">
               <span class="header__profile-pic">
-                <img src="${results[i+2].attributes.pictureThumbnailUrl}" class="profile-pic">
+                <img src="${results[i+2].attributes.pictureThumbnailUrl}" class="profile-pic js-product--click">
               </span>
-              <span class="header--pet-name">
+              <span class="header--pet-name js-product--click">
                 ${results[i].attributes.name}
               </span>
             </div>
           </header>
-          <div class="product--container">
+          <div class="product--container js-product--click">
             <img 
               src="${results[i+2].pictures.large.url}" 
               alt=""
@@ -488,8 +491,6 @@ function closeModalDialog() {
 
 // UP NEXT
 
-// o Clean up mobile details page styling (also make it's window smaller and in the center with darkened background)
-// o Clean up desktop details page styling
 // o Make product card "name" linkable to details page.
 // o Replace filter button text with icons?
 // o Add breed link to open modal for breed details API?
