@@ -16,25 +16,27 @@ As a animal lover, I wanted an easy way to search for dogs available for adoptio
 ![Build Status](https://github.com/adammain/perfect-pet/commits/main)
 
 ## Screenshots
-Landing Page:
+Landing Page Desktop/Mobile:
 
-![landing page](screenshots/login.png)
+![landing page desktop](screenshots/landing-desktop.png)
+![landing page mobile](screenshots/landing-mobile.png)
 
-Filtered Results:
+Filtered Results Desktop/Mobile:
 
-![filtered results](screenshots/about.png)
+![filtered results](screenshots/filtered-results.png)
+![filtered results mobile](screenshots/mobile-results.png)
 
 Pet Detail:
 
-![pet detail](screenshots/library.png)
+![pet detail](screenshots/pet-detail.png)
 
 Share on Twitter:
 
-![twitter](screenshots/recommendations.png)
+![twitter](screenshots/twitter-share.png)
 
 Share with Email:
 
-![email](screenshots/recommendations.png)
+![email](screenshots/email-share.png)
 
 ## Built With
 
@@ -49,6 +51,7 @@ Share with Email:
 * Filter results by dog or cat (additional filtrs in progress)
 * View individual pet and adoption agency details
 * Share favorite pets on twitter or with email
+* Fully responsive for mobile screens
 
 ## Demo
 
