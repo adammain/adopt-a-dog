@@ -125,7 +125,6 @@ function storePetResults(results) {
     petResult.species === 'Dog' ? STORE.dogs.push(petResult) : STORE.cats.push(petResult) 
   } // End of "data" loop
   
-  console.log("STORE: ", STORE)
   renderResults()
 }
 
@@ -158,12 +157,10 @@ function fetchPetData(zipcode = 80203) {
       if (responseJson.meta.count === 0) {
         renderError("no-results")
       } else {
-        console.log("responseJson",responseJson)
         storePetResults(responseJson)
       }
     })
     .catch(error => {
-      console.log('error', error)
       location.reload(true)
     })
 
@@ -179,7 +176,6 @@ function fetchPetData(zipcode = 80203) {
     if (responseJson.meta.count === 0) {
       renderError("no-results")
     } else {
-      console.log("responseJson",responseJson)
       storePetResults(responseJson)
     }
   })
@@ -192,7 +188,6 @@ function onZipCodeSearch() {
   $('form').submit(function(e) {
     e.preventDefault()
     const zipcode = $('.js-zipcode-input').val()
-    console.log("submitted", zipcode)
     fetchPetData(zipcode)
   })
 }
@@ -225,10 +220,10 @@ function onFilter() {
   })
 }
 
+// Open modal detail on pet click
 function onProductClick() {
   $('.js-product--click').click(function(e) {
     const petId = $(this).closest('article').attr('data-id')
-    console.log('product clicked', petId)
     $('body').addClass('modal--open')
     renderModalDialog(petId)
 
@@ -254,7 +249,6 @@ function onShareClick() {
 // Listen for the 'more' button -> expand truncated about text
 function onExpandAboutText() {
   $('.js-button--expand').click(function(e) {
-    console.log("expand")
     let id = $(this).attr('data-id')
     let pet = getPetFromStore(id)
     let aboutText = pet.attributes.descriptionText
@@ -267,7 +261,6 @@ function onExpandAboutText() {
 /* RENDER FUNCTIONS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 function renderError(error) {
-  console.log("`renderError`, ran")
   let message = ''
 
   switch (error) {
@@ -287,7 +280,6 @@ function renderError(error) {
 }
 
 function renderResults() {
-  console.log("`renderResults`, ran", { ...STORE.dogs, ...STORE.cats })
   let results 
 
   // Apply filters or display all results
@@ -464,7 +456,7 @@ function renderResults() {
 
 function renderModalDialog(id) {
   const pet = getPetFromStore(id)
-  console.log("pet clicked and found attempting to display", pet)
+  
   if (pet) {
     $('.modal').removeClass('hidden')
     $('.js-modal__image').attr('src', `${pet.pictures.large.url}`)
