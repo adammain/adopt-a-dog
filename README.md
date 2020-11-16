@@ -3,13 +3,13 @@
 Initial wireframes:
 
 https://gist.github.com/adammain/7bad1a81462955743a3fc5ae99b01290 -->
-# https://adammain.github.io/perfect-pet/
+# [Perfect Pet](https://adammain.github.io/perfect-pet/)
 
 Search and find pets (dogs or cats) available for adoption from highly reputable adoption agencies near given zipcodes.  
 
 ## Motivation
 
-As a animal lover, I wanted an easy way to search for dogs available for adoption in my city without having to research and visit all the adoption agencies around my area.  With this app, you can search almost all the trustworthy adoption agencies without having to visit their sites invidually. 
+As a animal lover, I wanted an easy way to search dogs available for adoption in my city without having to research all the adoption agencies in my area.  With this app, you can search almost trustworthy adoption agencies without having to visit their sites invidually. 
 
 ## Build Status
 
