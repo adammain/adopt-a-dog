@@ -147,7 +147,7 @@ function fetchPetData(zipcode = 80203) {
   };
   
   // Fetch Dogs
-  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=30&fields=[breeds]=name`, requestOptions)
+  fetch(`${url}/public/animals/search/available/dogs/haspic/?sort=random&limit=15&fields=[breeds]=name`, requestOptions)
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -168,7 +168,7 @@ function fetchPetData(zipcode = 80203) {
     })
 
   // Fetch Cats
-  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=10&fields=[breeds]=name`, requestOptions)
+  fetch(`${url}/public/animals/search/available/cats/haspic/?sort=random&limit=5&fields=[breeds]=name`, requestOptions)
   .then(response => {
     if (response.ok) {
       return response.json()
