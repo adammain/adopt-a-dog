@@ -48,16 +48,6 @@ function textTruncate(str, length, ending) {
   }
 }
 
-/* INITIALIZE APP
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-function initialize(){
-  fetchPetData()
-  onZipCodeSearch()
-  onFilter()
-}
-
-$(initialize) 
-
 /* STORE DATA MANAGEMENT
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 let STORE = {
@@ -159,7 +149,8 @@ function fetchPetData(zipcode = 80203) {
       }
     })
     .catch(error => {
-      location.reload(true)
+      renderError("error")
+      console.log("Error with API call: ", error)
     })
 
   // Fetch Cats
@@ -177,7 +168,10 @@ function fetchPetData(zipcode = 80203) {
       storePetResults(responseJson)
     }
   })
-  .catch(error => console.log('error', error))
+  .catch(error => {
+    renderError("error")
+    console.log("Error with API call: ", error)
+  })
 }
 
 /* LISTENER FUNCTIONS
@@ -479,3 +473,13 @@ function closeModalDialog() {
   $('body').removeClass('modal--open')
   $('.modal').addClass('hidden')
 }
+
+/* INITIALIZE APP
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+function initialize(){
+  fetchPetData()
+  onZipCodeSearch()
+  onFilter()
+}
+
+$(initialize) 
